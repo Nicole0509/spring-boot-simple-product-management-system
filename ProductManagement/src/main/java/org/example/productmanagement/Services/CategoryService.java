@@ -37,4 +37,16 @@ public class CategoryService {
         return categoryRepo.findById(id)
                 .map (category -> new CategoryDTO(category.getName(),category.getDescription()));
     }
+
+    public Optional<CategoryDTO> updateCategory(int id, CategoryDTO categoryDTO) {
+
+        categoryRepo.findById(id)
+                .ifPresent(category -> {
+                    category.setName(categoryDTO.getName());
+                    category.setDescription(categoryDTO.getDescription());
+                    categoryRepo.save(category);
+                });
+
+        return getCategoryById(id);
+    }
 }
