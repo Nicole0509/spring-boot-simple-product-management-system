@@ -1,12 +1,8 @@
 package org.example.productmanagement.Controllers;
 
 import org.example.productmanagement.DTOs.ProductCategoryDTO;
-import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Services.ProductCategoryService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
@@ -20,5 +16,10 @@ public class ProductCategoryController {
     @PostMapping("/{productId}/category/{categoryId}")
     public ProductCategoryDTO assignCategory(@PathVariable int productId, @PathVariable int categoryId){
         return productCategoryService.assignCategoryToProduct(productId,categoryId);
+    }
+
+    @DeleteMapping("/{productId}/category/{categoryId}")
+    public ProductCategoryDTO removeCategoryFromProduct(@PathVariable int productId, @PathVariable int categoryId){
+        return productCategoryService.removeCategoryFromProduct(productId,categoryId);
     }
 }

@@ -46,4 +46,29 @@ public class ProductCategoryService {
                         .collect(Collectors.toSet())
         );
     }
+
+    public ProductCategoryDTO removeCategoryFromProduct(int productId, int categoryId){
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        Product product = productRepo.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        ProductCategoryDTO productCategoryDTO = new ProductCategoryDTO();
+
+        product.getCategories().remove(category);
+
+        category.getProducts().remove(product);
+
+        productRepo.save(product);
+
+        return new ProductCategoryDTO(
+                product.getName(),
+                product.getPrice(),
+                product.getCategories()
+                        .stream()
+                        .map(Category::getName)
+                        .collect(Collectors.toSet())
+        );
+    }
 }
