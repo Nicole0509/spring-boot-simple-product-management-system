@@ -6,6 +6,7 @@ import org.example.productmanagement.Repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,5 +31,10 @@ public class CategoryService {
                 .stream()
                 .map(category -> new CategoryDTO(category.getName(),category.getDescription()))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<CategoryDTO> getCategoryById(int id) {
+        return categoryRepo.findById(id)
+                .map (category -> new CategoryDTO(category.getName(),category.getDescription()));
     }
 }

@@ -5,6 +5,7 @@ import org.example.productmanagement.Services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
@@ -23,5 +24,10 @@ public class CategoryController {
     @GetMapping
     public List<CategoryDTO> getAllCategories(){
         return categoryService.getAllCategories();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<CategoryDTO> getCategoryById(@PathVariable int id){
+        return categoryService.getCategoryById(id);
     }
 }
