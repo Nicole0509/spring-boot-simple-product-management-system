@@ -35,4 +35,9 @@ public class CategoryController {
     public Optional<CategoryDTO> updateCategory(@PathVariable int id,@RequestBody CategoryDTO categoryDTO){
         return categoryService.updateCategory(id, categoryDTO);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteCategory(@PathVariable int id){
+        categoryService.deleteCategory(id);
+    }
 }

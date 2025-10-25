@@ -49,4 +49,8 @@ public class CategoryService {
 
         return getCategoryById(id);
     }
+
+    public void deleteCategory(int id) {
+        categoryRepo.deleteById(id);
+    }
 }
