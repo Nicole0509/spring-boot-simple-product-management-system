@@ -33,4 +33,14 @@ public class ProductService {
                 .map(product -> new ProductDTO(product.getName(),product.getPrice()))
                 .collect(Collectors.toList());
     }
+
+    public ProductDTO updateProductById(int id, ProductDTO productDTO) {
+         productRepo.findById(id).ifPresent(product -> {
+            product.setName(productDTO.getName());
+            product.setPrice(productDTO.getPrice());
+            productRepo.save(product);
+        });
+
+         return productDTO;
+    }
 }
