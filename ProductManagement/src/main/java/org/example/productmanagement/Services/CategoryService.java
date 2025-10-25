@@ -5,9 +5,12 @@ import org.example.productmanagement.Models.Category;
 import org.example.productmanagement.Repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CategoryService {
-    private CategoryRepository categoryRepo;
+    private final CategoryRepository categoryRepo;
 
     public CategoryService(CategoryRepository categoryRepo) {
         this.categoryRepo = categoryRepo;
@@ -20,5 +23,12 @@ public class CategoryService {
         categoryRepo.save(category);
 
         return categoryDTO;
+    }
+
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepo.findAll()
+                .stream()
+                .map(category -> new CategoryDTO(category.getName(),category.getDescription()))
+                .collect(Collectors.toList());
     }
 }
