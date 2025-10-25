@@ -1,5 +1,7 @@
 package org.example.productmanagement.Services;
 
+import org.example.productmanagement.DTOs.ProductCategoryDTO;
+import org.example.productmanagement.DTOs.ProductDTO;
 import org.example.productmanagement.Models.Category;
 import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Repositories.CategoryRepository;
@@ -7,6 +9,7 @@ import org.example.productmanagement.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductCategoryService {
@@ -18,7 +21,7 @@ public class ProductCategoryService {
         this.productRepo = productRepo;
     }
 
-    public Product assignCategoryToProduct(int productId, int categoryId){
+    public ProductCategoryDTO assignCategoryToProduct(int productId, int categoryId){
 
         Category category = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -26,10 +29,21 @@ public class ProductCategoryService {
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
+        ProductCategoryDTO productCategoryDTO = new ProductCategoryDTO();
+
         product.getCategories().add(category);
 
-//        category.getProducts().add(product);
+        category.getProducts().add(product);
 
-        return productRepo.save(product);
+        productRepo.save(product);
+
+        return new ProductCategoryDTO(
+                product.getName(),
+                product.getPrice(),
+                product.getCategories()
+                        .stream()
+                        .map(Category::getName)
+                        .collect(Collectors.toSet())
+        );
     }
 }

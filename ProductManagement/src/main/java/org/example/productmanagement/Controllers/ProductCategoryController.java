@@ -1,5 +1,6 @@
 package org.example.productmanagement.Controllers;
 
+import org.example.productmanagement.DTOs.ProductCategoryDTO;
 import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Services.ProductCategoryService;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/{productId}/category/{categoryId}")
-    public Product assignCategory(@PathVariable int productId,@PathVariable int categoryId){
+    public ProductCategoryDTO assignCategory(@PathVariable int productId, @PathVariable int categoryId){
         return productCategoryService.assignCategoryToProduct(productId,categoryId);
     }
 }
