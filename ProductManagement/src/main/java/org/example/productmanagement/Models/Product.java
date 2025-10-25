@@ -1,9 +1,7 @@
 package org.example.productmanagement.Models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,5 +28,7 @@ public class Product {
                     columnNames = {"product_id", "category_id"}
             )
     )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Category> categories = new HashSet<>();
 }

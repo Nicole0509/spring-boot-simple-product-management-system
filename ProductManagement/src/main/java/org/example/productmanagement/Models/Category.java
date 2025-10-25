@@ -1,9 +1,7 @@
 package org.example.productmanagement.Models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,5 +19,7 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Product> products = new HashSet<>();
 }
