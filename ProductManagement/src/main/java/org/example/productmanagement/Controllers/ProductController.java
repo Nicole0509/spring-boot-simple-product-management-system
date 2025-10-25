@@ -5,6 +5,7 @@ import org.example.productmanagement.Services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -25,8 +26,13 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/{id}")
+    public Optional<ProductDTO> getProductById(@PathVariable int id){
+        return productService.getProductById(id);
+    }
+
     @PutMapping("/{id}")
-    public ProductDTO updateProductById(@PathVariable int id, @RequestBody ProductDTO productDTO){
+    public Optional<ProductDTO> updateProductById(@PathVariable int id, @RequestBody ProductDTO productDTO){
         return productService.updateProductById(id, productDTO);
     }
 

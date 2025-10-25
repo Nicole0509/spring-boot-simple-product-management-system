@@ -6,6 +6,7 @@ import org.example.productmanagement.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,14 +35,20 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDTO updateProductById(int id, ProductDTO productDTO) {
+    public Optional<ProductDTO> getProductById(int id) {
+
+        return productRepo.findById(id).map(product ->new ProductDTO(product.getName(),product.getPrice()));
+
+    }
+
+    public Optional<ProductDTO> updateProductById(int id, ProductDTO productDTO) {
          productRepo.findById(id).ifPresent(product -> {
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
             productRepo.save(product);
         });
 
-         return productDTO;
+         return getProductById(id);
     }
 
     public void deleteProductById(int id) {
