@@ -5,6 +5,9 @@ import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepo;
@@ -22,5 +25,12 @@ public class ProductService {
         productRepo.save(product);
 
         return productDTO;
+    }
+
+    public List<ProductDTO> getAllProducts() {
+        return productRepo.findAll()
+                .stream()
+                .map(product -> new ProductDTO(product.getName(),product.getPrice()))
+                .collect(Collectors.toList());
     }
 }
