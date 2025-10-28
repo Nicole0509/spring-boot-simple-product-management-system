@@ -2,6 +2,7 @@ package org.example.productmanagement.Services;
 
 import org.example.productmanagement.DTOs.ProductDTO;
 import org.example.productmanagement.Exceptions.ResourceAlreadyExists;
+import org.example.productmanagement.Exceptions.ResourceNotFound;
 import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -42,13 +43,20 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProductDTO> getProductById(int id) {
+    public ProductDTO getProductById(int id) {
 
-        return productRepo.findById(id).map(product ->new ProductDTO(product.getName(),product.getPrice()));
-
+        return productRepo.findById(id)
+                .map(product -> new ProductDTO(product.getName(),product.getPrice()))
+                .orElseThrow(() -> new ResourceNotFound("Product with id " + id + " was not found"));
     }
 
-    public Optional<ProductDTO> updateProductById(int id, ProductDTO productDTO) {
+    public ProductDTO updateProductById(int id, ProductDTO productDTO) {
+
+        //Check if a product id already exists
+        if (!productRepo.existsById(id)) {
+            throw new ResourceNotFound("Product with name '" + productDTO.getName() + "'  and id '"+ id + "' was not found");
+        }
+
          productRepo.findById(id).ifPresent(product -> {
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
