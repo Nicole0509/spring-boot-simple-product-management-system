@@ -1,14 +1,12 @@
 package org.example.productmanagement.Services;
 
 import org.example.productmanagement.DTOs.ProductCategoryDTO;
-import org.example.productmanagement.DTOs.ProductDTO;
 import org.example.productmanagement.Models.Category;
 import org.example.productmanagement.Models.Product;
 import org.example.productmanagement.Repositories.CategoryRepository;
 import org.example.productmanagement.Repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
