@@ -1,6 +1,7 @@
 package org.example.productmanagement.Services;
 
 import org.example.productmanagement.DTOs.CategoryDTO;
+import org.example.productmanagement.Exceptions.ResourceAlreadyExists;
 import org.example.productmanagement.Models.Category;
 import org.example.productmanagement.Repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class CategoryService {
     }
 
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        //Check if a product already exists
+        if (categoryRepo.existsByName(categoryDTO.getName())) {
+            throw new ResourceAlreadyExists("Category with name '" + categoryDTO.getName() + "' already exists");
+        }
+
+        //Create a new Product
         Category category = new Category();
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
