@@ -27,12 +27,12 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Optional<CategoryDTO> getCategoryById(@PathVariable int id){
+    public CategoryDTO getCategoryById(@PathVariable int id){
         return categoryService.getCategoryById(id);
     }
 
     @PutMapping("/{id}")
-    public Optional<CategoryDTO> updateCategory(@PathVariable int id,@RequestBody CategoryDTO categoryDTO){
+    public CategoryDTO updateCategory(@PathVariable int id,@RequestBody CategoryDTO categoryDTO){
         return categoryService.updateCategory(id, categoryDTO);
     }
 
