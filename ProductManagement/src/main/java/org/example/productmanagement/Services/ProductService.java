@@ -57,6 +57,7 @@ public class ProductService {
             throw new ResourceNotFound("Product with name '" + productDTO.getName() + "'  and id '"+ id + "' was not found");
         }
 
+        //Update existing product
          productRepo.findById(id).ifPresent(product -> {
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
@@ -67,6 +68,11 @@ public class ProductService {
     }
 
     public void deleteProductById(int id) {
+
+        //Check if a product id already exists
+        if (!productRepo.existsById(id)) {
+            throw new ResourceNotFound("Product with id '"+ id + "' was not found");
+        }
         productRepo.deleteById(id);
     }
 }
